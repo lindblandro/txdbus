@@ -15,7 +15,7 @@ from txdbus import authentication, bus, endpoints
 from txdbus.authentication import DBusAuthenticationFailed
 
 
-class GetPass(object):
+class GetPass:
     def getuser(self):
         return 'testuser'
 
@@ -90,7 +90,7 @@ class ClientAuthenticatorTester(unittest.TestCase):
     def test_unix_fd_agree(self):
 
         @implementer(interfaces.IUNIXTransport)
-        class FakeUNIXTransport(object):
+        class FakeUNIXTransport:
             def write(self, data):
                 pass
 
@@ -348,7 +348,7 @@ class ExternalAuthMechanismTester(unittest.TestCase):
 
         self.assertEquals(bea.getMechanismName(), 'EXTERNAL')
 
-        class T(object):
+        class T:
             _unix_creds = None
 
         bea.init(T())

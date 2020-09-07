@@ -5,13 +5,12 @@ model's definition of Interfaces.
 
 @author: Tom Cocagne
 """
-import six
 import twisted
 
 from txdbus import marshal
 
 
-class Method (object):
+class Method:
     """
     Represents a Method declaration in a DBus Interface.
 
@@ -46,7 +45,7 @@ class Method (object):
                 )
 
 
-class Signal (object):
+class Signal:
     """
     Represents a Signal declaration in a DBus Interface
 
@@ -66,7 +65,7 @@ class Signal (object):
         self.sig = arguments
 
 
-class Property (object):
+class Property:
     """
     Represents a Property declaration in a DBus Interface.
 
@@ -115,7 +114,7 @@ class Property (object):
             self.emits = emitsOnChange
 
 
-class DBusInterface (object):
+class DBusInterface:
     """
     Represents a DBus Interface Definition. The introspectionXml property
     contains the full XML introspection description of the interface defined by
@@ -164,8 +163,8 @@ class DBusInterface (object):
         Adds a L{Method} to the interface
         """
         if m.nargs == -1:
-            m.nargs = len([a for a in marshal.genCompleteTypes(m.sigIn)])
-            m.nret = len([a for a in marshal.genCompleteTypes(m.sigOut)])
+            m.nargs = len(marshal.genCompleteTypes(m.sigIn))
+            m.nret = len(marshal.genCompleteTypes(m.sigOut))
         self.methods[m.name] = m
         self._xml = None
 
@@ -174,7 +173,7 @@ class DBusInterface (object):
         Adds a L{Signal} to the interface
         """
         if s.nargs == -1:
-            s.nargs = len([a for a in marshal.genCompleteTypes(s.sig)])
+            s.nargs = len(marshal.genCompleteTypes(s.sig))
         self.signals[s.name] = s
         self._xml = None
 
@@ -212,7 +211,7 @@ class DBusInterface (object):
             l = []
             l.append('  <interface name="%s">' % (self.name,))
 
-            k = sorted(six.iterkeys(self.methods))
+            k = sorted(self.methods.keys())
             for m in (self.methods[a] for a in k):
                 l.append('    <method name="%s">' % (m.name,))
                 for arg_sig in marshal.genCompleteTypes(m.sigIn):
@@ -225,14 +224,14 @@ class DBusInterface (object):
                         (arg_sig,))
                 l.append('    </method>')
 
-            k = sorted(six.iterkeys(self.signals))
+            k = sorted(self.signals.keys())
             for s in (self.signals[a] for a in k):
                 l.append('    <signal name="%s">' % (s.name,))
                 for arg_sig in marshal.genCompleteTypes(s.sig):
                     l.append('      <arg type="%s"/>' % (arg_sig,))
                 l.append('    </signal>')
 
-            k = list(six.iterkeys(self.properties))
+            k = list(self.properties.keys())
             k.sort()
             for p in (self.properties[a] for a in k):
                 l.append(

@@ -50,7 +50,7 @@ class SigFromPyTests(unittest.TestCase):
         self.t([1], 'ai')
 
     def test_bytearray(self):
-        self.t(bytearray(six.b('\xAA\xAA')), 'ay')
+        self.t(bytearray(b'\xAA\xAA'), 'ay')
 
     def test_list_multiple_elements_same_type(self):
         self.t([1, 2], 'ai')
@@ -71,12 +71,12 @@ class SigFromPyTests(unittest.TestCase):
         self.t({'foo': 1, 'bar': '2'}, 'a{sv}')
 
     def test_fail(self):
-        class SomeClass(object):
+        class SomeClass:
             pass
         self.assertRaises(m.MarshallingError, m.sigFromPy, SomeClass())
 
     def test_class(self):
-        class V(object):
+        class V:
             dbusSignature = 'ii'
         self.t(V(), 'ii')
 
@@ -246,7 +246,7 @@ class TestArrayMarshal(TestMarshal):
     def test_byte_bytearray(self):
         self.check(
             'ay',
-            bytearray(six.b('\xaa\xaa')),
+            bytearray(b'\xaa\xaa'),
             pack('iBB', 2, 170, 170),
         )
 
@@ -307,8 +307,8 @@ class TestVariantMarshal(TestMarshal):
     def test_bytearray(self):
         self.check(
             'v', bytearray(
-                six.b('\xAA\xAA')), pack(
-                'B2siBB', 2, six.b('ay'), 2, 170, 170))
+                b'\xAA\xAA'), pack(
+                'B2siBB', 2, b'ay', 2, 170, 170))
 
 
 # ------------------------------------------------------------------------

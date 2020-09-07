@@ -31,7 +31,7 @@ class TestException (Exception):
     dbusErrorName = 'org.txdbus.trial.TestException'
 
 
-class ServerObjectTester(object):
+class ServerObjectTester:
     tst_path = '/test/TestObj'
     tst_bus = 'org.txdbus.trial.bus%d' % os.getpid()
     TestClass = None
@@ -1260,8 +1260,8 @@ class ComplexObjectTester(ServerObjectTester):
             return ro.callRemote('testComplexArgs', 'foo', Foo())
 
         def got_reply(reply):
-            expected = repr(u'foo') + ' # ' + \
-                repr([1, 2, [u'substring', 10], 4])
+            expected = repr('foo') + ' # ' + \
+                repr([1, 2, ['substring', 10], 4])
             self.assertEquals(reply, expected)
 
         return self.proxy_chain(got_object, got_reply)

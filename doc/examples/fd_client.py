@@ -12,7 +12,6 @@ Passing open UNIX filedescriptors accross RPC / ICP mechanisms such as dbus
 requires the underlying transport to be a UNIX domain socket.
 """
 
-from __future__ import print_function
 
 from twisted.internet import defer, task
 

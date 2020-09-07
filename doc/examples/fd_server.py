@@ -13,8 +13,6 @@ requires the underlying transport to be a UNIX domain socket.
 """
 
 
-from __future__ import print_function
-
 import os
 
 import twisted
